@@ -8,9 +8,8 @@ namespace CRUD.Models
     {
         public long id;
         public long id_seance;
-        public long id_client;
-        public int seats_count;
-        DateTime reservation_Time;
+        public int seatNumber;
+        DateTime reservationTime;
     }
 
     class Reservations

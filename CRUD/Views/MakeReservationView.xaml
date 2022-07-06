@@ -28,7 +28,6 @@
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
                             <Rectangle Grid.Row="0" Fill="#FF5192A0" MinWidth="140" MinHeight="100"/>
-                            <TextBlock Grid.Row="1" Text="{MakeReservationView.seanceName}" MinWidth="140" MinHeight="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                         </Grid>
                     </StackPanel>
                 </DataTemplate>

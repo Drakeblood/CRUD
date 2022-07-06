@@ -18,8 +18,6 @@ namespace CRUD.Views
     /// </summary>
     public partial class MakeReservationView : UserControl
     {
-        public string seanceName = "jan";
-
         public MakeReservationView()
         {
             InitializeComponent();
