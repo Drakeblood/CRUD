@@ -12,7 +12,7 @@ namespace CRUD.ViewModels
 
         public MainViewModel()
         {
-            CurrentViewModel = new MakeReservationViewModel();
+            CurrentViewModel = new MakeReservationViewModel(new Models.Seances());
         }
     }
 }

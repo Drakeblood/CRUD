@@ -5,12 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using CRUD.Models;
+using CRUD.Commands;
 
 namespace CRUD.ViewModels
 {
     public class MakeReservationViewModel : ViewModelBase
     {
-        private int seanceID;
+        private int seanceID = 6;
         public int SeanceID
         {
             get
@@ -60,6 +61,8 @@ namespace CRUD.ViewModels
         public MakeReservationViewModel(Seances _seances)
         {
             seances = _seances;
+            SubmitCommand = new MakeReservationCommand(this, null);
+            CancelCommand = new CancelMakeReservationCommand();
         }
     }
 }

@@ -43,8 +43,8 @@
             </ListView.View>
         </ListView>
         <StackPanel Grid.Row="2" HorizontalAlignment="Stretch">
-            <Button x:Name="submitButton" Content="Submit" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,3,0,0" />
-            <Button x:Name="cancelButton" Content="Cancel" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,3,0,0"/>
+            <Button Command="{Binding SubmitCommand}" x:Name="submitButton" Content="Submit" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,3,0,0" />
+            <Button Command="{Binding CancelCommand}" x:Name="cancelButton" Content="Cancel" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,3,0,0"/>
         </StackPanel>
     </Grid>
 </UserControl>

@@ -5,10 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CRUD"
         xmlns:views="clr-namespace:CRUD.Views"
+        xmlns:vms="clr-namespace:CRUD.ViewModels"
         mc:Ignorable="d"
         Title="CRUD" Height="450" Width="800">
     <Grid>
         <!--<views:MainPageView/>-->
-        <views:MakeReservationView/>
+        <views:MakeReservationView DataContext="{Binding CurrentViewModel}" />
     </Grid>
 </Window>

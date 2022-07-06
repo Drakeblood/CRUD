@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CRUD.Models
 {
-    class Cinema
+    public class Cinema
     {
     }
 }
