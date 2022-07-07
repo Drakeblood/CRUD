@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using CRUD.ViewModels;
+using CRUD.Models;
 
 namespace CRUD
 {
@@ -14,11 +15,18 @@ namespace CRUD
     /// </summary>
     public partial class App : Application
     {
+        private readonly Cinema cinema;
+
+        public App()
+        {
+            cinema = new Cinema();
+        }
+
         protected override void OnStartup(StartupEventArgs e)
         {
             MainWindow = new MainWindow()
             {
-                DataContext = new MainViewModel()
+                DataContext = new MainViewModel(cinema)
             };
             MainWindow.Show();
 

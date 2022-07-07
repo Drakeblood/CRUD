@@ -9,16 +9,42 @@ namespace CRUD.Models
         public long id;
         public long id_seance;
         public int seatNumber;
-        DateTime reservationTime;
+        public DateTime reservationTime;
     }
 
     class Reservations
     {
-        public List<Reservation> reservations;
+        private readonly List<Reservation> reservations;
 
         public Reservations()
         {
             reservations = new List<Reservation>();
+        }
+
+        public IEnumerable<Reservation> GetAllReservations()
+        {
+            return reservations;
+        }
+
+        public int GetReservationsCount()
+        {
+            return reservations.Count;
+        }
+
+        public bool AddReservation(Reservation reservation)
+        {
+            foreach (Reservation existingReservation in reservations)
+            {
+                if (existingReservation.id_seance == reservation.id_seance)
+                {
+                    if(existingReservation.seatNumber != reservation.seatNumber)
+                    {
+                        reservations.Add(reservation);
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
     }
 }

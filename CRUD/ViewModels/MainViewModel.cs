@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CRUD.Models;
 
 namespace CRUD.ViewModels
 {
@@ -10,9 +11,9 @@ namespace CRUD.ViewModels
     {
         public ViewModelBase CurrentViewModel { get; }
 
-        public MainViewModel()
+        public MainViewModel(Cinema cinema)
         {
-            CurrentViewModel = new MakeReservationViewModel(new Models.Seances());
+            CurrentViewModel = new MakeReservationViewModel(cinema);
         }
     }
 }

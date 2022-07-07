@@ -25,22 +25,32 @@ namespace CRUD.Commands
 
         public override bool CanExecute(object parameter)
         {
-            return true;
-            //return !string.IsNullOrEmpty(makeReservationViewModel.Username) &&
-            //    makeReservationViewModel.FloorNumber > 0 &&
-            //    base.CanExecute(parameter);
+            return makeReservationViewModel.SeanceID > 0 &&
+                makeReservationViewModel.SeatNumber > 0 &&
+                base.CanExecute(parameter);
         }
 
         public override void Execute(object parameter)
         {
-            System.Diagnostics.Debug.WriteLine("Test");
             Reservation reservation = new Reservation();
+            reservation.id = cinema.GetReservationsCount() + 1;
+            reservation.id_seance = makeReservationViewModel.SeanceID;
+            reservation.seatNumber = makeReservationViewModel.SeatNumber;
+            reservation.reservationTime = DateTime.Now;
+
+            if (!cinema.MakeReservation(reservation))
+            {
+                MessageBox.Show("Something went wrong.", "Error",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            MessageBox.Show("Successfully reserved seat.", "Success",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            //if(e.PropertyName == nameof(MakeReservationViewModel.Username) ||
-            //    e.PropertyName == nameof(MakeReservationViewModel.FloorNumber))
+            if (e.PropertyName == nameof(MakeReservationViewModel.SeanceID) ||
+                e.PropertyName == nameof(MakeReservationViewModel.SeatNumber))
             {
                 OnCanExecutedChanged();
             }

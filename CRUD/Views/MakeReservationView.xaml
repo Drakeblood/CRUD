@@ -12,9 +12,9 @@
             <RowDefinition AllowDrop="False" Height="5*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
-        <ListView Grid.Row="0" Name="seancesListView">
-            <ListView.ItemsPanel>
+
+        <ListView Grid.Row="0" Name="seancesListView" ItemsSource="{Binding AvailableSeances}">
+             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Horizontal"></StackPanel>
                 </ItemsPanelTemplate>
@@ -28,11 +28,11 @@
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
                             <Rectangle Grid.Row="0" Fill="#FF5192A0" MinWidth="140" MinHeight="100"/>
+                            <TextBlock Text="{Binding SeanceID}" TextAlignment="Center" Margin="0 10 0 0"/>
                         </Grid>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
-            <ScrollBar x:Name="scrollBar" Orientation="Horizontal"/>
         </ListView>
         
         <ListView x:Name="seatsListView" Grid.Row="1">

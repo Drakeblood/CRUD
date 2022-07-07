@@ -14,11 +14,22 @@ namespace CRUD.Models
 
     public class Seances
     {
-        public List<Seance> seances;
+        private readonly List<Seance> seances;
 
         public Seances()
         {
             seances = new List<Seance>();
+        }
+
+        public IEnumerable<Seance> GetAllSeances()
+        {
+            return seances;
+        }
+
+        public bool AddSeance(Seance seance)
+        {
+            seances.Add(seance);
+            return true;
         }
     }
 }
