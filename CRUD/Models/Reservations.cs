@@ -37,14 +37,14 @@ namespace CRUD.Models
             {
                 if (existingReservation.id_seance == reservation.id_seance)
                 {
-                    if(existingReservation.seatNumber != reservation.seatNumber)
+                    if(existingReservation.seatNumber == reservation.seatNumber)
                     {
-                        reservations.Add(reservation);
-                        return true;
+                        return false;
                     }
                 }
             }
-            return false;
+            reservations.Add(reservation);
+            return true;
         }
     }
 }

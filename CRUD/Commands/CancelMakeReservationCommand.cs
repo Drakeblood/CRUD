@@ -10,7 +10,7 @@ namespace CRUD.Commands
     {
         public override void Execute(object parameter)
         {
-
+            System.Diagnostics.Debug.WriteLine("Cancel");
         }
     }
 }

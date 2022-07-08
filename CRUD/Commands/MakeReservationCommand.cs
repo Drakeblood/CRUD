@@ -25,7 +25,7 @@ namespace CRUD.Commands
 
         public override bool CanExecute(object parameter)
         {
-            return makeReservationViewModel.SeanceID > 0 &&
+            return makeReservationViewModel.SeanceID > -1 &&
                 makeReservationViewModel.SeatNumber > 0 &&
                 base.CanExecute(parameter);
         }
