@@ -7,7 +7,13 @@ namespace CRUD.Models
     public struct Hall
     {
         public long hall_number;
-        public int seats_count;
+        public List<Seat> seats;
+    }
+
+    public struct Seat
+    {
+        public int number;
+        public bool available;
     }
 
     public class Halls

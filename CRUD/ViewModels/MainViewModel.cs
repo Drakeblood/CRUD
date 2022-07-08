@@ -4,16 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CRUD.Models;
+using CRUD.Stores;
 
 namespace CRUD.ViewModels
 {
     public class MainViewModel : ViewModelBase 
     {
-        public ViewModelBase CurrentViewModel { get; }
+        private readonly NavigationStore navigationStore;
+        public ViewModelBase CurrentViewModel => navigationStore.CurrentViewModel;
 
-        public MainViewModel(Cinema cinema)
+        public MainViewModel(NavigationStore _navigationStore)
         {
-            CurrentViewModel = new MakeReservationViewModel(cinema);
+            navigationStore = _navigationStore;
         }
     }
 }

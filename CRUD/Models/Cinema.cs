@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Text;
+using CRUD.Services.ReservationCreators;
+using CRUD.Services.ReservationProviders;
 
 namespace CRUD.Models
 {
@@ -8,16 +11,18 @@ namespace CRUD.Models
     {
         private readonly Reservations reservations;
         private readonly Seances seances;
+        private readonly Halls halls;
 
-        public Cinema()
+        public Cinema(Reservations _reservations)
         {
-            reservations = new Reservations();
+            reservations = _reservations;
             seances = new Seances();
+            halls = new Halls();
         }
 
-        public IEnumerable<Reservation> GetAllReservations()
+        public async Task<IEnumerable<Reservation>> GetAllReservations()
         {
-            return reservations.GetAllReservations();
+            return await reservations.GetAllReservations();
         }
 
         public int GetReservationsCount()
@@ -25,9 +30,9 @@ namespace CRUD.Models
             return reservations.GetReservationsCount();
         }
 
-        public bool MakeReservation(Reservation reservation)
+        public async Task MakeReservation(Reservation reservation)
         {
-            return reservations.AddReservation(reservation);
+            await reservations.AddReservation(reservation);
         }
 
         public IEnumerable<Seance> GetAllSeances()

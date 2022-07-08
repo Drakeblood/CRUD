@@ -8,8 +8,16 @@
         xmlns:vms="clr-namespace:CRUD.ViewModels"
         mc:Ignorable="d"
         Title="CRUD" Height="450" Width="800">
-    <Grid>
-        <!--<views:MainPageView/>-->
-        <views:MakeReservationView DataContext="{Binding CurrentViewModel}" />
+    <Grid MaxWidth="600" Margin="20 10">
+        <Grid.Resources>
+            <DataTemplate DataType="{x:Type vms:MakeReservationViewModel}">
+                <views:MakeReservationView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:MainViewModel}">
+                <views:MainPageView />
+            </DataTemplate>
+        </Grid.Resources>
+
+        <ContentControl Content="{Binding CurrentViewModel}" />
     </Grid>
 </Window>

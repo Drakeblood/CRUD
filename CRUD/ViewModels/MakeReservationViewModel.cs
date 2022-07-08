@@ -12,7 +12,7 @@ namespace CRUD.ViewModels
 {
     public class MakeReservationViewModel : ViewModelBase
     {
-        private int seanceID;
+        private int seanceID = -1;
         public int SeanceID
         {
             get
@@ -26,17 +26,17 @@ namespace CRUD.ViewModels
             }
         }
 
-        private int seatNumber;
-        public int SeatNumber
+        private int seatIndex = -1;
+        public int SeatIndex
         {
             get
             {
-                return seatNumber;
+                return seatIndex;
             }
             set
             {
-                seatNumber = value;
-                OnPropertyChanged(nameof(SeatNumber));
+                seatIndex = value;
+                OnPropertyChanged(nameof(SeatIndex));
             }
         }
 
@@ -48,17 +48,30 @@ namespace CRUD.ViewModels
         private readonly ObservableCollection<SeanceViewModel> seances;
         public IEnumerable<SeanceViewModel> AvailableSeances => seances;
 
+        private readonly ObservableCollection<SeatViewModel> seats;
+        public IEnumerable<SeatViewModel> AvailableSeats => seats;
+
         public MakeReservationViewModel(Cinema _cinema)
         {
             seances = new ObservableCollection<SeanceViewModel>();
             cinema = _cinema;
-            
+
             seances.Add(new SeanceViewModel(new Seance() { hall_number = 1, id = 1, id_movie = 1, start_time = DateTime.Now }));
             seances.Add(new SeanceViewModel(new Seance() { hall_number = 2, id = 2, id_movie = 2, start_time = DateTime.Now }));
             seances.Add(new SeanceViewModel(new Seance() { hall_number = 3, id = 3, id_movie = 1, start_time = DateTime.Now }));
             seances.Add(new SeanceViewModel(new Seance() { hall_number = 2, id = 4, id_movie = 3, start_time = DateTime.Now }));
             seances.Add(new SeanceViewModel(new Seance() { hall_number = 2, id = 5, id_movie = 3, start_time = DateTime.Now }));
             seances.Add(new SeanceViewModel(new Seance() { hall_number = 1, id = 6, id_movie = 2, start_time = DateTime.Now }));
+
+            seats = new ObservableCollection<SeatViewModel>();
+            seats.Add(new SeatViewModel(new Seat() { number = 1, available = true }));
+            seats.Add(new SeatViewModel(new Seat() { number = 2, available = true }));
+            seats.Add(new SeatViewModel(new Seat() { number = 3, available = false }));
+            seats.Add(new SeatViewModel(new Seat() { number = 4, available = true }));
+            seats.Add(new SeatViewModel(new Seat() { number = 5, available = false }));
+            seats.Add(new SeatViewModel(new Seat() { number = 6, available = true }));
+            seats.Add(new SeatViewModel(new Seat() { number = 7, available = true }));
+            seats.Add(new SeatViewModel(new Seat() { number = 8, available = true }));
 
             SubmitCommand = new MakeReservationCommand(this, _cinema);
             CancelCommand = new CancelMakeReservationCommand();

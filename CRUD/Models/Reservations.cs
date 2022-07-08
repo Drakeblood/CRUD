@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
+using CRUD.Services.ReservationCreators;
+using CRUD.Services.ReservationProviders;
 
 namespace CRUD.Models
 {
@@ -12,18 +15,23 @@ namespace CRUD.Models
         public DateTime reservationTime;
     }
 
-    class Reservations
+    public class Reservations
     {
+        private readonly IReservationCreator reservationCreator;
+        private readonly IReservationProvider reservationProvider;
+
         private readonly List<Reservation> reservations;
 
-        public Reservations()
+        public Reservations(IReservationCreator _reservationCreator, IReservationProvider _reservationProvider)
         {
             reservations = new List<Reservation>();
+            reservationCreator = _reservationCreator;
+            reservationProvider = _reservationProvider;
         }
 
-        public IEnumerable<Reservation> GetAllReservations()
+        public async Task<IEnumerable<Reservation>> GetAllReservations()
         {
-            return reservations;
+            return await reservationProvider.GetAllReservations();
         }
 
         public int GetReservationsCount()
@@ -31,7 +39,7 @@ namespace CRUD.Models
             return reservations.Count;
         }
 
-        public bool AddReservation(Reservation reservation)
+        public async Task AddReservation(Reservation reservation)
         {
             foreach (Reservation existingReservation in reservations)
             {
@@ -39,12 +47,11 @@ namespace CRUD.Models
                 {
                     if(existingReservation.seatNumber == reservation.seatNumber)
                     {
-                        return false;
+                        throw new Exception();
                     }
                 }
             }
-            reservations.Add(reservation);
-            return true;
+            await reservationCreator.CreateReservation(reservation);
         }
     }
 }

@@ -10,7 +10,7 @@ using System.Windows;
 
 namespace CRUD.Commands
 {
-    public class MakeReservationCommand : CommandBase
+    public class MakeReservationCommand : AsyncCommandBase
     {
         private readonly MakeReservationViewModel makeReservationViewModel;
         private readonly Cinema cinema;
@@ -26,31 +26,36 @@ namespace CRUD.Commands
         public override bool CanExecute(object parameter)
         {
             return makeReservationViewModel.SeanceID > -1 &&
-                makeReservationViewModel.SeatNumber > 0 &&
+                makeReservationViewModel.SeatIndex > -1 &&
                 base.CanExecute(parameter);
         }
 
-        public override void Execute(object parameter)
+        public override async Task ExecuteAsync(object parameter)
         {
             Reservation reservation = new Reservation();
             reservation.id = cinema.GetReservationsCount() + 1;
             reservation.id_seance = makeReservationViewModel.SeanceID;
-            reservation.seatNumber = makeReservationViewModel.SeatNumber;
+            reservation.seatNumber = makeReservationViewModel.SeatIndex;
             reservation.reservationTime = DateTime.Now;
 
-            if (!cinema.MakeReservation(reservation))
+            try
+            {
+                await cinema.MakeReservation(reservation);
+
+                MessageBox.Show("Successfully reserved seat.", "Success",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception)
             {
                 MessageBox.Show("Something went wrong.", "Error",
                     MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            MessageBox.Show("Successfully reserved seat.", "Success",
-                    MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(MakeReservationViewModel.SeanceID) ||
-                e.PropertyName == nameof(MakeReservationViewModel.SeatNumber))
+                e.PropertyName == nameof(MakeReservationViewModel.SeatIndex))
             {
                 OnCanExecutedChanged();
             }
