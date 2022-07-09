@@ -11,7 +11,7 @@ namespace CRUD.Models
     {
         private readonly Reservations reservations;
         private readonly Seances seances;
-        private readonly Halls halls;
+        public readonly Halls halls;
 
         public Cinema(Reservations _reservations)
         {

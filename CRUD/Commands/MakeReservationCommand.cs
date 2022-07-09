@@ -1,4 +1,5 @@
 ﻿using CRUD.Models;
+using CRUD.Stores;
 using CRUD.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -13,12 +14,12 @@ namespace CRUD.Commands
     public class MakeReservationCommand : AsyncCommandBase
     {
         private readonly MakeReservationViewModel makeReservationViewModel;
-        private readonly Cinema cinema;
+        private readonly CinemaStore cinemaStore;
 
-        public MakeReservationCommand(MakeReservationViewModel _makeReservationViewModel, Cinema _cinema)
+        public MakeReservationCommand(MakeReservationViewModel _makeReservationViewModel, CinemaStore _cinemaStore)
         {
             makeReservationViewModel = _makeReservationViewModel;
-            cinema = _cinema;
+            cinemaStore = _cinemaStore;
 
             makeReservationViewModel.PropertyChanged += OnViewModelPropertyChanged;
         }
@@ -33,14 +34,13 @@ namespace CRUD.Commands
         public override async Task ExecuteAsync(object parameter)
         {
             Reservation reservation = new Reservation();
-            reservation.id = cinema.GetReservationsCount() + 1;
             reservation.id_seance = makeReservationViewModel.SeanceID;
             reservation.seatNumber = makeReservationViewModel.SeatIndex;
             reservation.reservationTime = DateTime.Now;
 
             try
             {
-                await cinema.MakeReservation(reservation);
+                await cinemaStore.MakeReservation(reservation);
 
                 MessageBox.Show("Successfully reserved seat.", "Success",
                     MessageBoxButton.OK, MessageBoxImage.Information);

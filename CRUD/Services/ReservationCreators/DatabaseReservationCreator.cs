@@ -21,7 +21,7 @@ namespace CRUD.Services.ReservationCreators
         {
             using (CinemaDbContext context = dbContextFactory.CreateDbContext())
             {
-                await Task.Delay(3000);
+                //await Task.Delay(1000);
 
                 ReservationDTO reservationDTO = ToReservationDTO(reservation);
 

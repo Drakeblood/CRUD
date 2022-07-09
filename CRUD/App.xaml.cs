@@ -24,12 +24,14 @@ namespace CRUD
 
         private readonly CinemaDbContextFactory cinemaDbContextFactory;
         private readonly Cinema cinema;
+        private readonly CinemaStore cinemaStore;
         private readonly NavigationStore navigationStore;
 
         public App()
         {
             cinemaDbContextFactory = new CinemaDbContextFactory(CONNECTION_STRING);
-            cinema = new Cinema(new Reservations(new DatabaseReservationCreator(cinemaDbContextFactory), new DatabaseReservationProvider(cinemaDbContextFactory)));
+            cinema = new Cinema(new Reservations(cinemaDbContextFactory, new DatabaseReservationCreator(cinemaDbContextFactory), new DatabaseReservationProvider(cinemaDbContextFactory)));
+            cinemaStore = new CinemaStore(cinema);
             navigationStore = new NavigationStore();
         }
 
@@ -40,7 +42,7 @@ namespace CRUD
                 cinemaDbContex.Database.Migrate();
             }
 
-            navigationStore.CurrentViewModel = new MakeReservationViewModel(cinema);
+            navigationStore.CurrentViewModel = new MakeReservationViewModel(cinemaStore);
 
             MainWindow = new MainWindow()
             {

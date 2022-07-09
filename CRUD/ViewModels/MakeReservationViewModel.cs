@@ -7,6 +7,7 @@ using System.Windows.Input;
 using CRUD.Models;
 using CRUD.Commands;
 using System.Collections.ObjectModel;
+using CRUD.Stores;
 
 namespace CRUD.ViewModels
 {
@@ -43,18 +44,18 @@ namespace CRUD.ViewModels
         public ICommand SubmitCommand { get; }
         public ICommand CancelCommand { get; }
 
-        private readonly Cinema cinema;
+        private readonly CinemaStore cinemaStore;
 
         private readonly ObservableCollection<SeanceViewModel> seances;
         public IEnumerable<SeanceViewModel> AvailableSeances => seances;
 
-        private readonly ObservableCollection<SeatViewModel> seats;
+        private ObservableCollection<SeatViewModel> seats;
         public IEnumerable<SeatViewModel> AvailableSeats => seats;
 
-        public MakeReservationViewModel(Cinema _cinema)
+        public MakeReservationViewModel(CinemaStore _cinemaStore)
         {
             seances = new ObservableCollection<SeanceViewModel>();
-            cinema = _cinema;
+            cinemaStore = _cinemaStore;
 
             seances.Add(new SeanceViewModel(new Seance() { hall_number = 1, id = 1, id_movie = 1, start_time = DateTime.Now }));
             seances.Add(new SeanceViewModel(new Seance() { hall_number = 2, id = 2, id_movie = 2, start_time = DateTime.Now }));
@@ -73,7 +74,7 @@ namespace CRUD.ViewModels
             seats.Add(new SeatViewModel(new Seat() { number = 7, available = true }));
             seats.Add(new SeatViewModel(new Seat() { number = 8, available = true }));
 
-            SubmitCommand = new MakeReservationCommand(this, _cinema);
+            SubmitCommand = new MakeReservationCommand(this, _cinemaStore);
             CancelCommand = new CancelMakeReservationCommand();
         }
     }
