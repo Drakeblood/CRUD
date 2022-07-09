@@ -9,14 +9,16 @@ namespace CRUD.ViewModels
 {
     public class SeatViewModel : ViewModelBase
     {
-        public Seat seat;
+        private int seatNumber;
+        private bool available;
 
-        public string SeatNumber => seat.number.ToString();
-        public char Available => seat.available ? '✓' : 'X';
+        public string SeatNumber => seatNumber.ToString();
+        public char Available => available ? '✓' : 'X';
 
-        public SeatViewModel(Seat _seat)
+        public SeatViewModel(int _seatNumber, bool _available)
         {
-            seat = _seat;
+            seatNumber = _seatNumber;
+            available = _available;
         }
     }
 }

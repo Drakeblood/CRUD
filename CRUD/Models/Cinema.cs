@@ -10,14 +10,11 @@ namespace CRUD.Models
     public class Cinema
     {
         private readonly Reservations reservations;
-        private readonly Seances seances;
-        public readonly Halls halls;
+        public Reservations GetReservations => reservations;
 
         public Cinema(Reservations _reservations)
         {
             reservations = _reservations;
-            seances = new Seances();
-            halls = new Halls();
         }
 
         public async Task<IEnumerable<Reservation>> GetAllReservations()
@@ -33,11 +30,6 @@ namespace CRUD.Models
         public async Task MakeReservation(Reservation reservation)
         {
             await reservations.AddReservation(reservation);
-        }
-
-        public IEnumerable<Seance> GetAllSeances()
-        {
-            return seances.GetAllSeances();
         }
     }
 }

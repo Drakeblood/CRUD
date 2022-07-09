@@ -64,7 +64,7 @@ namespace CRUD
                 cinemaDbContex.Database.Migrate();
             }
 
-            navigationStore.CurrentViewModel = new MakeReservationViewModel(cinemaStore);
+            navigationStore.CurrentViewModel = new MakeReservationViewModel(cinemaStore, cinemaDbContextFactory);
 
             MainWindow = new MainWindow()
             {

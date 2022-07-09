@@ -8,6 +8,7 @@ using CRUD.Models;
 using CRUD.Commands;
 using System.Collections.ObjectModel;
 using CRUD.Stores;
+using CRUD.DbContexts;
 
 namespace CRUD.ViewModels
 {
@@ -23,6 +24,7 @@ namespace CRUD.ViewModels
             set
             {
                 seanceID = value;
+                UpdateSeats(value);
                 OnPropertyChanged(nameof(SeanceID));
             }
         }
@@ -45,6 +47,7 @@ namespace CRUD.ViewModels
         public ICommand CancelCommand { get; }
 
         private readonly CinemaStore cinemaStore;
+        private readonly CinemaDbContextFactory cinemaDbContextFactory;
 
         private readonly ObservableCollection<SeanceViewModel> seances;
         public IEnumerable<SeanceViewModel> AvailableSeances => seances;
@@ -52,27 +55,24 @@ namespace CRUD.ViewModels
         private ObservableCollection<SeatViewModel> seats;
         public IEnumerable<SeatViewModel> AvailableSeats => seats;
 
-        public MakeReservationViewModel(CinemaStore _cinemaStore)
+        public MakeReservationViewModel(CinemaStore _cinemaStore, CinemaDbContextFactory _cinemaDbContextFactory)
         {
-            seances = new ObservableCollection<SeanceViewModel>();
             cinemaStore = _cinemaStore;
+            cinemaDbContextFactory = _cinemaDbContextFactory;
 
-            seances.Add(new SeanceViewModel(new Seance() { id_hall = 1, id_movie = 1, start_time = DateTime.Now }));
-            seances.Add(new SeanceViewModel(new Seance() { id_hall = 2, id_movie = 2, start_time = DateTime.Now }));
-            seances.Add(new SeanceViewModel(new Seance() { id_hall = 3, id_movie = 1, start_time = DateTime.Now }));
-            seances.Add(new SeanceViewModel(new Seance() { id_hall = 2, id_movie = 3, start_time = DateTime.Now }));
-            seances.Add(new SeanceViewModel(new Seance() { id_hall = 2, id_movie = 3, start_time = DateTime.Now }));
-            seances.Add(new SeanceViewModel(new Seance() { id_hall = 1, id_movie = 2, start_time = DateTime.Now }));
+            var cinemaDbContext = cinemaDbContextFactory.CreateDbContext();
+
+            seances = new ObservableCollection<SeanceViewModel>();
+            {
+                var seancesList = cinemaDbContext.Seances.ToList();
+                var movieList = cinemaDbContext.Movies.ToList();
+                for (int i = 0; i < seancesList.Count; i++)
+                {
+                    seances.Add(new SeanceViewModel(movieList[seancesList[i].MovieID - 1].Title, seancesList[i].StartTime.ToString(), seancesList[i].HallID.ToString()));
+                }
+            }
 
             seats = new ObservableCollection<SeatViewModel>();
-            seats.Add(new SeatViewModel(new Seat() { number = 1, available = true }));
-            seats.Add(new SeatViewModel(new Seat() { number = 2, available = true }));
-            seats.Add(new SeatViewModel(new Seat() { number = 3, available = false }));
-            seats.Add(new SeatViewModel(new Seat() { number = 4, available = true }));
-            seats.Add(new SeatViewModel(new Seat() { number = 5, available = false }));
-            seats.Add(new SeatViewModel(new Seat() { number = 6, available = true }));
-            seats.Add(new SeatViewModel(new Seat() { number = 7, available = true }));
-            seats.Add(new SeatViewModel(new Seat() { number = 8, available = true }));
 
             SubmitCommand = new MakeReservationCommand(this, _cinemaStore);
             CancelCommand = new CancelMakeReservationCommand();
@@ -83,7 +83,16 @@ namespace CRUD.ViewModels
         private void OnReservationMade(Reservation reservation)
         {
             System.Diagnostics.Debug.WriteLine(reservation.seatNumber);
-            seats[reservation.seatNumber] = new SeatViewModel(new Seat() { number = seats[reservation.seatNumber].seat.number, available = false });
+        }
+
+        private void UpdateSeats(int seanceID)
+        {
+            var cinemaDbContext = cinemaDbContextFactory.CreateDbContext();
+            seats.Clear();
+            for(int i = 0; i < cinemaDbContext.Halls.ToList()[cinemaDbContext.Seances.ToList()[seanceID].HallID - 1].SeatsCount; i++)
+            {
+                seats.Add(new SeatViewModel(i + 1, true));
+            }
         }
     }
 }

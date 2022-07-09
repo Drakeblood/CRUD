@@ -23,7 +23,7 @@ namespace CRUD.Services.ReservationProviders
         {
             using (CinemaDbContext context = dbContextFactory.CreateDbContext())
             {
-                await Task.Delay(3000);
+                //await Task.Delay(3000);
 
                 IEnumerable<ReservationDTO> reservationDTOs = await context.Reservations.ToListAsync();
 

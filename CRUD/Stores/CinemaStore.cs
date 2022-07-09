@@ -15,6 +15,8 @@ namespace CRUD.Stores
 
         public event Action<Reservation> ReservationMade;
 
+        public Cinema GetCinema => cinema;
+
         public CinemaStore(Cinema _cinema)
         {
             cinema = _cinema;

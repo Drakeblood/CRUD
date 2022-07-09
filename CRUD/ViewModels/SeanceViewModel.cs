@@ -9,13 +9,16 @@ namespace CRUD.ViewModels
 {
     public class SeanceViewModel : ViewModelBase
     {
-        private readonly Seance seance;
 
-        public string SeanceID => seance.id_movie.ToString();
+        public string MovieName { get; set; }
+        public string StartTime { get; set; }
+        public string HallNumber { get; set; }
 
-        public SeanceViewModel(Seance _seance)
+        public SeanceViewModel(string movieName, string startTime, string hallNumber)
         {
-            seance = _seance;
+            MovieName = movieName;
+            StartTime = startTime;
+            HallNumber = hallNumber;
         }
     }
 }
