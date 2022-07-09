@@ -10,7 +10,7 @@ namespace CRUD.ViewModels
     public class SeatViewModel : ViewModelBase
     {
         private int seatNumber;
-        private bool available;
+        public bool available;
 
         public string SeatNumber => seatNumber.ToString();
         public char Available => available ? '✓' : 'X';

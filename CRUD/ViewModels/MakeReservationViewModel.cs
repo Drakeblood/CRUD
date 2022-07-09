@@ -82,7 +82,7 @@ namespace CRUD.ViewModels
 
         private void OnReservationMade(Reservation reservation)
         {
-            System.Diagnostics.Debug.WriteLine(reservation.seatNumber);
+            seats[reservation.seatNumber] = new SeatViewModel(reservation.seatNumber + 1, false);
         }
 
         private void UpdateSeats(int seanceID)
@@ -92,6 +92,15 @@ namespace CRUD.ViewModels
             for(int i = 0; i < cinemaDbContext.Halls.ToList()[cinemaDbContext.Seances.ToList()[seanceID].HallID - 1].SeatsCount; i++)
             {
                 seats.Add(new SeatViewModel(i + 1, true));
+            }
+
+            var reservations = cinemaDbContext.Reservations.ToList();
+            for (int i = 0; i < reservations.Count; i++)
+            {
+                if(reservations[i].SeanceID == seanceID)
+                {
+                    seats[reservations[i].SeatNumber].available = false;
+                }
             }
         }
     }

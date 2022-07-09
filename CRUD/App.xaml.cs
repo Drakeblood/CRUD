@@ -42,6 +42,7 @@ namespace CRUD
         {
             using (CinemaDbContext cinemaDbContex = cinemaDbContextFactory.CreateDbContext())
             {
+                cinemaDbContex.Database.Migrate();
                 // check if was added
                 if (cinemaDbContex.Halls.Count() <= 0)
                 {
@@ -61,7 +62,6 @@ namespace CRUD
 
                     cinemaDbContex.SaveChanges();
                 }  
-                cinemaDbContex.Database.Migrate();
             }
 
             navigationStore.CurrentViewModel = new MakeReservationViewModel(cinemaStore, cinemaDbContextFactory);
