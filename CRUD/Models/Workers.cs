@@ -6,7 +6,6 @@ namespace CRUD.Models
 {
     struct Worker
     {
-        public long id;
         public string login;
         public string password;
     }

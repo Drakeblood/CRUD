@@ -6,8 +6,7 @@ namespace CRUD.Models
 {
     public struct Hall
     {
-        public long hall_number;
-        public List<Seat> seats;
+        public int seatsCount;
     }
 
     public struct Seat

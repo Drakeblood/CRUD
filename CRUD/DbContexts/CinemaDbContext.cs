@@ -11,5 +11,11 @@ namespace CRUD.DbContexts
         public CinemaDbContext(DbContextOptions options) : base(options) { }
 
         public DbSet<ReservationDTO> Reservations { get; set; }
+
+        public DbSet<SeanceDTO> Seances { get; set; }
+
+        public DbSet<HallDTO> Halls { get; set; }
+
+        public DbSet<MovieDTO> Movies { get; set; }
     }
 }

@@ -9,7 +9,7 @@ namespace CRUD.ViewModels
 {
     public class SeatViewModel : ViewModelBase
     {
-        private readonly Seat seat;
+        public Seat seat;
 
         public string SeatNumber => seat.number.ToString();
         public char Available => seat.available ? '✓' : 'X';

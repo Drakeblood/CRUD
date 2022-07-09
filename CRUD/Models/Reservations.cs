@@ -13,8 +13,7 @@ namespace CRUD.Models
 {
     public struct Reservation
     {
-        public long id;
-        public long id_seance;
+        public int id_seance;
         public int seatNumber;
         public DateTime reservationTime;
     }

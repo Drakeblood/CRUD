@@ -6,9 +6,8 @@ namespace CRUD.Models
 {
     public struct Seance
     {
-        public long id;
-        public long id_movie;
-        public int hall_number;
+        public int id_movie;
+        public int id_hall;
         public DateTime start_time;
     }
 

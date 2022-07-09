@@ -57,12 +57,12 @@ namespace CRUD.ViewModels
             seances = new ObservableCollection<SeanceViewModel>();
             cinemaStore = _cinemaStore;
 
-            seances.Add(new SeanceViewModel(new Seance() { hall_number = 1, id = 1, id_movie = 1, start_time = DateTime.Now }));
-            seances.Add(new SeanceViewModel(new Seance() { hall_number = 2, id = 2, id_movie = 2, start_time = DateTime.Now }));
-            seances.Add(new SeanceViewModel(new Seance() { hall_number = 3, id = 3, id_movie = 1, start_time = DateTime.Now }));
-            seances.Add(new SeanceViewModel(new Seance() { hall_number = 2, id = 4, id_movie = 3, start_time = DateTime.Now }));
-            seances.Add(new SeanceViewModel(new Seance() { hall_number = 2, id = 5, id_movie = 3, start_time = DateTime.Now }));
-            seances.Add(new SeanceViewModel(new Seance() { hall_number = 1, id = 6, id_movie = 2, start_time = DateTime.Now }));
+            seances.Add(new SeanceViewModel(new Seance() { id_hall = 1, id_movie = 1, start_time = DateTime.Now }));
+            seances.Add(new SeanceViewModel(new Seance() { id_hall = 2, id_movie = 2, start_time = DateTime.Now }));
+            seances.Add(new SeanceViewModel(new Seance() { id_hall = 3, id_movie = 1, start_time = DateTime.Now }));
+            seances.Add(new SeanceViewModel(new Seance() { id_hall = 2, id_movie = 3, start_time = DateTime.Now }));
+            seances.Add(new SeanceViewModel(new Seance() { id_hall = 2, id_movie = 3, start_time = DateTime.Now }));
+            seances.Add(new SeanceViewModel(new Seance() { id_hall = 1, id_movie = 2, start_time = DateTime.Now }));
 
             seats = new ObservableCollection<SeatViewModel>();
             seats.Add(new SeatViewModel(new Seat() { number = 1, available = true }));
@@ -76,6 +76,14 @@ namespace CRUD.ViewModels
 
             SubmitCommand = new MakeReservationCommand(this, _cinemaStore);
             CancelCommand = new CancelMakeReservationCommand();
+
+            cinemaStore.ReservationMade += OnReservationMade;
+        }
+
+        private void OnReservationMade(Reservation reservation)
+        {
+            System.Diagnostics.Debug.WriteLine(reservation.seatNumber);
+            seats[reservation.seatNumber] = new SeatViewModel(new Seat() { number = seats[reservation.seatNumber].seat.number, available = false });
         }
     }
 }
