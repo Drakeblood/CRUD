@@ -15,6 +15,7 @@ using CRUD.Services.ReservationProviders;
 using CRUD.DTOs;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using CRUD.Services;
 
 namespace CRUD
 {
@@ -64,7 +65,7 @@ namespace CRUD
                 }  
             }
 
-            navigationStore.CurrentViewModel = new MakeReservationViewModel(cinemaStore, cinemaDbContextFactory);
+            navigationStore.CurrentViewModel = CreateLoginViewModel();
 
             MainWindow = new MainWindow()
             {
@@ -73,6 +74,16 @@ namespace CRUD
             MainWindow.Show();
 
             base.OnStartup(e);
+        }
+
+        private MakeReservationViewModel CreateMakeReservationViewModel()
+        {
+            return new MakeReservationViewModel(cinemaStore, cinemaDbContextFactory);
+        }
+
+        private LoginViewModel CreateLoginViewModel()
+        {
+            return LoginViewModel.LoadViewModel(cinema, new NavigationService(navigationStore, CreateMakeReservationViewModel));
         }
     }
 }

@@ -9,15 +9,22 @@ namespace CRUD.Stores
 {
     public class NavigationStore
     {
-        private ViewModelBase currentViewModel;
+        private ViewModelBase _currentViewModel;
         public ViewModelBase CurrentViewModel
         {
-            get { return currentViewModel; }
-
+            get => _currentViewModel;
             set
             {
-                currentViewModel = value;
+                _currentViewModel = value;
+                OnCurrentViewModelChanged();
             }
+        }
+
+        public event Action CurrentViewModelChanged;
+
+        private void OnCurrentViewModelChanged()
+        {
+            CurrentViewModelChanged?.Invoke();
         }
 
     }

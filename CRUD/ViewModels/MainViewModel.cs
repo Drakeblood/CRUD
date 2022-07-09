@@ -16,6 +16,12 @@ namespace CRUD.ViewModels
         public MainViewModel(NavigationStore _navigationStore)
         {
             navigationStore = _navigationStore;
+            navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
+        }
+
+        private void OnCurrentViewModelChanged()
+        {
+            OnPropertyChanged(nameof(CurrentViewModel));
         }
     }
 }
